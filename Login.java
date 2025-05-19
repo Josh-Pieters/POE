@@ -6,13 +6,13 @@ public class Login {
     private String firstName;
     private String lastName;
 
-    // Fixed parameter order
+    // Parameter order
     public void registerUser(String firstName, String lastName, String username, String password) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.storedUsername = username;
         this.storedPassword = password;
-        
+
     }
 
     public boolean checkUserName()

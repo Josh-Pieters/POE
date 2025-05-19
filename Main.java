@@ -8,13 +8,20 @@ public class Main
     public static void main(String[] args)
     {
         Scanner sc = new Scanner(System.in);
-        Login userLogin = new Login();
-
         String userName;
         String password;
         String firstName;
         String lastName;
         String cellphoneNumber;
+        String recipientCellphoneNumber = "";
+        String message = "";
+        int messageAmount=0;
+        Login userLogin = new Login();
+
+
+        
+
+        System.out.println("\n----------Registration----------");
 
         //First name Input and Validation
         do {
@@ -97,6 +104,67 @@ public class Main
 
 
         }
+
+        int option = 0;
+
+        while (option != 3) {
+            System.out.println("\nChoose an option:");
+            System.out.println("1. Send Message");
+            System.out.println("2. Check recently sent messages");
+            System.out.println("3. Exit");
+            System.out.print("Enter option: ");
+
+            if (sc.hasNextInt()) {
+                option = sc.nextInt();
+                sc.nextLine();
+            } else {
+                System.out.println("Invalid input. Please enter a number.");
+                sc.nextLine();
+                continue;
+            }
+
+            if (option == 1) {
+                // Collect recipient number
+                do {
+                    System.out.println("Please enter the number you want to send a message to (e.g., +1234567890):");
+                    recipientCellphoneNumber = sc.nextLine();
+                } while (!validateCellphone(recipientCellphoneNumber));
+
+                // Collect message content
+                do
+                {
+                    System.out.println("Please enter the message you want to send (between 50 and 250 characters):");
+                    message = sc.nextLine();
+                } while (!(message.length() >= 50 && message.length() <= 250));
+
+                Message sendMessage = new Message(recipientCellphoneNumber, message);
+
+                String decision = sendMessage.sendMessage();
+
+                if (decision.equals("Send Message")) {
+                    sendMessage.displayMessage();
+                } else if (decision.equals("Store Message to send later")) {
+                    //Store the message
+                    sendMessage.messageHash();
+                    sendMessage.storeMessage(); // save to JSON
+                    System.out.println("Message stored to send later.");
+                } else {
+                    System.out.println("Message discarded.");
+                }
+
+                messageAmount++;
+            } else if (option == 2) {
+                System.out.println("------------------------------");
+                System.out.println("\t\tComing Soon");
+                System.out.println("------------------------------");
+            } else if (option == 3) {
+                System.out.println("Thank you for using QuickChat!");
+            } else {
+                System.out.println("Invalid option. Please try again.");
+            }
+        }
+
+
     }
 
     public static boolean validateCellphone(String number)
