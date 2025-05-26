@@ -49,7 +49,7 @@ public class Message
 
     public boolean checkMessage(String message)
     {
-        return (message.length() < 50 || message.length() > 250);
+        return (message.length() > 250);
     }
 
     public String generateMessageID()
@@ -89,7 +89,8 @@ public class Message
             "Message ID: " + (getMessageID()) + "\n" +
             "Message Hash: " + (getMessageHash()) + "\n" +
             "Recipient: " + (getRecipient()) + "\n" +
-            "Message: " + (getMessageText());
+            "Message: " + (getMessageText()) + "\n" +
+            "Message Count: " + (returnTotalMessages());
 
         JOptionPane.showMessageDialog(null, details);
     }
@@ -109,7 +110,8 @@ public class Message
 }
 
 public void storeMessage()
-    {JSONObject msg = new JSONObject();
+    {
+        JSONObject msg = new JSONObject();
         msg.put("MessageID", messageID);
         msg.put("Recipient", recipient);
         msg.put("Message", messageContent);
@@ -127,6 +129,10 @@ public void storeMessage()
         {
             System.out.println("Failed to store message: " + e.getMessage());
         }
+    }
+public static int returnTotalMessages()
+    {
+        return messageCount;
     }
 
 }
