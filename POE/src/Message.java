@@ -22,6 +22,12 @@ public class Message
         messageCount++;
         messages.add(this);
     }
+
+    public static ArrayList<Message> getAllMessages() {
+        return messages;
+    }
+
+
     public String getMessageID()
     {
         return messageID;
